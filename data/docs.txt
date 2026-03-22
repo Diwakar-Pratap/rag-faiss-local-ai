@@ -1,0 +1,3 @@
+RAG stands for Retrieval Augmented Generation.
+FAISS is a library for efficient similarity search.
+NVIDIA provides APIs for LLM inference.
