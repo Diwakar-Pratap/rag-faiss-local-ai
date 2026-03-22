@@ -4,20 +4,17 @@ from app.rag_pipeline import run_rag
 
 app = Flask(__name__)
 
-# ✅ Load FAISS index once at startup
-print("🔄 Loading FAISS index...")
+print(" Loading FAISS index...")
 store = FAISSVectorStore(dimension=384)
 store.load()
-print("✅ FAISS index loaded successfully")
+print(" FAISS index loaded successfully")
 
 
-# 🌐 Home route (UI)
 @app.route("/")
 def home():
     return render_template("index.html")
 
 
-# 🤖 Chat API
 @app.route("/chat", methods=["POST"])
 def chat():
     try:
@@ -31,7 +28,7 @@ def chat():
         if not user_query:
             return jsonify({"error": "Empty query"}), 400
 
-        # 🔍 Run RAG pipeline
+    
         result = run_rag(user_query, store)
 
         return jsonify({
@@ -40,19 +37,19 @@ def chat():
         })
 
     except Exception as e:
-        print("❌ Error:", str(e))
+        print(" Error:", str(e))
         return jsonify({
             "error": "Something went wrong",
             "details": str(e)
         }), 500
 
 
-# 🔁 Health check (optional, useful for debugging)
+
 @app.route("/health", methods=["GET"])
 def health():
     return jsonify({"status": "ok"})
 
 
-# ▶️ Run Flask app
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
